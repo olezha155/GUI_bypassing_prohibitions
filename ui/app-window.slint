@@ -1,0 +1,77 @@
+import { Button, VerticalBox, TextEdit, ScrollView } from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    title: "Bypassing Prohibitions";
+
+    height: 400px;
+    width: 600px;
+
+    in-out property <string> status_log: "Готов к работе...";
+
+    property <string> url_to_activate;
+    property <string> url_to_config;
+
+    callback activate_clicked(string);
+    callback config_add_clicked(string);
+
+
+    Rectangle {
+
+        TextEdit {
+            height: 40px; 
+            width: 430px;
+            x: 19px;
+            y: 23px; 
+
+            placeholder-text: "Укажите URL на нужно применить обход (https://google.com)";
+            edited(text) => { root.url_to_activate = text; }
+        }
+
+        Button {
+            height: 40px; 
+            width: 120px;
+            x: 466px;
+            y: 23px;
+
+            text: "Активировать";
+            clicked => { root.activate_clicked(root.url_to_activate); }
+        }
+
+        TextEdit {
+            height: 40px; 
+            width: 430px;
+            x: 19px;
+            y: 93px; 
+
+            placeholder-text: "Укажите URL для добавления в конфиги обхода (https://google.com)";
+            edited(text) => { root.url_to_config = text; }
+        }
+
+        Button {
+            height: 40px; 
+            width: 120px;
+            x: 466px;
+            y: 93px;
+
+            text: "Добавить в\nконфигурацию";
+            clicked => { root.config_add_clicked(root.url_to_config) }
+        }
+
+        Rectangle {
+            x: 19px; y: 150px;
+            width: 567px; height: 230px;
+            background: #2a2a2a;
+            border-radius: 4px;
+
+            ScrollView {
+                Text {
+                    text: root.status_log;
+                    color: #00ff00; // Зеленый "хакерский" цвет
+                    font-family: "Consolas";
+                    font-size: 14px;
+                    wrap: word-wrap;
+                }
+            }
+        }
+    }
+}
