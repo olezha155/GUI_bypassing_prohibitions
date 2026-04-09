@@ -18,40 +18,32 @@ export component AppWindow inherits Window {
     Rectangle {
 
         TextEdit {
-            height: 40px; 
-            width: 430px;
-            x: 19px;
-            y: 23px; 
+            height: 40px; width: 430px;
+            x: 19px; y: 23px; 
 
             placeholder-text: "Укажите URL на нужно применить обход (https://google.com)";
             edited(text) => { root.url_to_activate = text; }
         }
 
         Button {
-            height: 40px; 
-            width: 120px;
-            x: 466px;
-            y: 23px;
+            height: 40px; width: 120px;
+            x: 466px; y: 23px;
 
             text: "Активировать";
             clicked => { root.activate_clicked(root.url_to_activate); }
         }
 
         TextEdit {
-            height: 40px; 
-            width: 430px;
-            x: 19px;
-            y: 93px; 
+            height: 40px; width: 430px;
+            x: 19px; y: 93px; 
 
             placeholder-text: "Укажите URL для добавления в конфиги обхода (https://google.com)";
             edited(text) => { root.url_to_config = text; }
         }
 
         Button {
-            height: 40px; 
-            width: 120px;
-            x: 466px;
-            y: 93px;
+            height: 40px; width: 120px;
+            x: 466px; y: 93px;
 
             text: "Добавить в\nконфигурацию";
             clicked => { root.config_add_clicked(root.url_to_config) }
@@ -65,11 +57,15 @@ export component AppWindow inherits Window {
 
             ScrollView {
                 Text {
+                    width: parent.width; 
+
                     text: root.status_log;
-                    color: #00ff00; // Зеленый "хакерский" цвет
+
+                    color: #00ff00;
                     font-family: "Consolas";
                     font-size: 14px;
                     wrap: word-wrap;
+                    horizontal-alignment: center;
                 }
             }
         }

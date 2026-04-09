@@ -1,9 +1,6 @@
 use std::{env, fs, process, thread, time};
 use std::os::windows::process::CommandExt;
 use std::ptr::null_mut;
-use winapi::um::shellapi::ShellExecuteW;
-use winapi::um::winuser::SW_SHOWNORMAL;
-use std::os::windows::ffi::OsStrExt;
 
 use winapi::um::handleapi::CloseHandle;
 use winapi::um::processthreadsapi::{GetCurrentProcess, OpenProcessToken};
@@ -13,9 +10,8 @@ use winapi::um::winnt::{TokenElevation, HANDLE, TOKEN_ELEVATION, TOKEN_QUERY};
 use std::io::Write;
 use crate::AppWindow;
 
-// const FOLDER_PATH: &str = "src/core";
 const PROCESS_NAME: &str = "winws.exe";
-const MAX_WAIT_PER_BAT: u64 = 5;
+const MAX_WAIT_PER_BAT: u64 = 3;
 
 
 pub fn manager(my_url: String, ui_handle: slint::Weak<AppWindow>) {
@@ -36,12 +32,12 @@ pub fn manager(my_url: String, ui_handle: slint::Weak<AppWindow>) {
 }
 
 // проверка на то что у пользователя есть доступ к админке
-fn is_admin() -> bool {
+pub fn is_admin() -> bool {
     let mut handle: HANDLE = null_mut();
     unsafe {
         if OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &mut handle) == 0 { return false; }
         let mut elevation = TOKEN_ELEVATION { TokenIsElevated: 0 };
-        let mut size = std::mem::size_of::<TOKEN_ELEVATION>() as u32;
+        let mut size = size_of::<TOKEN_ELEVATION>() as u32;
         let ret = GetTokenInformation(handle, TokenElevation, &mut elevation as *mut _ as *mut _, size, &mut size);
         CloseHandle(handle);
         ret != 0 && elevation.TokenIsElevated != 0
@@ -74,20 +70,7 @@ fn check_address(url: &str) -> bool {
 fn run_bypasses(target_url: String, ui_handle: slint::Weak<AppWindow>) {
     let mut core_path = env::current_exe().unwrap();
     core_path.pop();
-    // core_path.push("src");
     core_path.push("core");
-
-    if !is_admin() {
-        log_to_gui(&ui_handle, "[*] Запрашиваем права администратора...".to_string());
-        let exe_path = env::current_exe().unwrap();
-        let operation: Vec<u16> = "runas\0".encode_utf16().collect();
-        let file: Vec<u16> = exe_path.as_os_str().encode_wide().chain(Some(0)).collect();
-
-        let params: Vec<u16> = format!("\"{}\"", target_url).encode_utf16().chain(Some(0)).collect();
-
-        unsafe { ShellExecuteW(null_mut(), operation.as_ptr(), file.as_ptr(), params.as_ptr(), null_mut(), SW_SHOWNORMAL); }
-        process::exit(0);
-    }
 
     log_to_gui(&ui_handle, format!("[*] Цель: {}", target_url));
     kill_bypasses();
@@ -135,7 +118,7 @@ fn run_bypasses(target_url: String, ui_handle: slint::Weak<AppWindow>) {
                 success = true;
                 break;
             }
-            thread::sleep(time::Duration::from_millis(500));
+            thread::sleep(time::Duration::from_millis(MAX_WAIT_PER_BAT * 100));
         }
 
         if success {
@@ -147,7 +130,7 @@ fn run_bypasses(target_url: String, ui_handle: slint::Weak<AppWindow>) {
             log_to_gui(&ui_handle, "нет доступа.".to_string());
             let _ = child.kill();
             kill_bypasses();
-            thread::sleep(time::Duration::from_millis(300));
+            thread::sleep(time::Duration::from_millis(MAX_WAIT_PER_BAT * 100));
         }
     }
 
