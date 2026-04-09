@@ -28,12 +28,20 @@ fn main() -> Result<(), Box<dyn Error>> {
     let ui = AppWindow::new()?;
     let ui_handle = ui.as_weak();
 
+    // активация батников
     ui.on_activate_clicked(move |url| {
         let ui_handle_for_thread = ui_handle.clone();
         let url_str = url.to_string();
 
         std::thread::spawn(move || {
             manager::manager(url_str, ui_handle_for_thread);
+        });
+    });
+
+    // добавления домена в конфиги
+    ui.on_config_add_clicked(move |url| {
+        std::thread::spawn(move || {
+            work_file_config::add_domain_in_config(url.as_str())
         });
     });
 

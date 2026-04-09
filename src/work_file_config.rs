@@ -16,7 +16,8 @@ pub fn add_url_in_config(url: &str) {
     let reader = BufReader::new(file);
 
     // читаем строки, фильтруем ошибки и собираем в вектор
-    let mut lines: Vec<String> = reader
+    let mut lines: Vec<String> = Vec::with_capacity(60);
+    lines = reader
         .lines()
         .map_while(Result::ok)
         .collect();
@@ -32,6 +33,47 @@ pub fn add_url_in_config(url: &str) {
                 .open(core_path).unwrap();
 
             writeln!(file, "{}", domain).expect("ERROR: write in file");
+        }
+    }
+}
+
+// добавляет указанные домены в конфиги
+pub fn add_domain_in_config(url: &str) {
+    let mut core_path = env::current_exe().unwrap();
+    core_path.pop();
+    core_path.push("core");
+    core_path.push("lists");
+    core_path.push("list-general.txt");
+
+    let file = File::open(&core_path).expect("ERROR: open file");
+    let reader = BufReader::new(file);
+
+    let mut lines: Vec<String> = Vec::with_capacity(60);
+    lines = reader
+        .lines()
+        .map_while(Result::ok)
+        .collect();
+
+    merge_sort::merge_sort(&mut lines);
+
+    let mut lines_domain: Vec<String> = Vec::with_capacity(5);
+    lines_domain = url
+        .lines()
+        .map(|s| s.to_string())
+        .collect();
+
+    for line_domain in lines_domain {
+        let domain = get_domain_by_url(&line_domain);
+
+        match lines.binary_search(&domain) {
+            Ok(_) => {}
+            Err(_) => {
+                let mut file = OpenOptions::new()
+                    .append(true)
+                    .open(&core_path).unwrap();
+
+                writeln!(file, "{}", domain).expect("ERROR: write in file");
+            }
         }
     }
 }
