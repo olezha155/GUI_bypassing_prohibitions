@@ -8,7 +8,7 @@ mod merge_sort;
 use std::error::Error;
 
 use winapi::um::shellapi::ShellExecuteW;
-use winapi::um::winuser::SW_SHOWNORMAL;
+use winapi::um::winuser::SW_HIDE;
 use std::os::windows::ffi::OsStrExt;
 use std::ptr::null_mut;
 
@@ -21,7 +21,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         let file: Vec<u16> = exe_path.as_os_str().encode_wide().chain(Some(0)).collect();
         let operation: Vec<u16> = "runas\0".encode_utf16().collect();
 
-        unsafe { ShellExecuteW(null_mut(), operation.as_ptr(), file.as_ptr(), null_mut(), null_mut(), SW_SHOWNORMAL); }
+        unsafe { ShellExecuteW(null_mut(), operation.as_ptr(), file.as_ptr(), null_mut(), null_mut(), SW_HIDE); }
         return Ok(());
     }
 
@@ -46,5 +46,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     });
 
     ui.run()?;
+    manager::kill_bypasses();
     Ok(())
 }

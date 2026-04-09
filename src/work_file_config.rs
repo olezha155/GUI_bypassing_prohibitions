@@ -2,7 +2,7 @@ use crate::merge_sort;
 
 use std::env;
 use std::fs::{File, OpenOptions};
-use std::io::{BufRead, Write, BufReader};
+use std::io::{BufRead, BufReader, Write};
 
 // добавляет домен если его нет в файле конфигов
 pub fn add_url_in_config(url: &str) {
@@ -17,10 +17,7 @@ pub fn add_url_in_config(url: &str) {
 
     // читаем строки, фильтруем ошибки и собираем в вектор
     let mut lines: Vec<String> = Vec::with_capacity(60);
-    lines = reader
-        .lines()
-        .map_while(Result::ok)
-        .collect();
+    lines.extend(reader.lines().map_while(Result::ok));
 
     merge_sort::merge_sort(&mut lines);
 
@@ -28,9 +25,7 @@ pub fn add_url_in_config(url: &str) {
     match lines.binary_search(&domain) {
         Ok(_) => {}
         Err(_) => {
-            let mut file = OpenOptions::new()
-                .append(true)
-                .open(core_path).unwrap();
+            let mut file = OpenOptions::new().append(true).open(core_path).unwrap();
 
             writeln!(file, "{}", domain).expect("ERROR: write in file");
         }
@@ -49,18 +44,12 @@ pub fn add_domain_in_config(url: &str) {
     let reader = BufReader::new(file);
 
     let mut lines: Vec<String> = Vec::with_capacity(60);
-    lines = reader
-        .lines()
-        .map_while(Result::ok)
-        .collect();
+    lines.extend(reader.lines().map_while(Result::ok));
 
     merge_sort::merge_sort(&mut lines);
 
     let mut lines_domain: Vec<String> = Vec::with_capacity(5);
-    lines_domain = url
-        .lines()
-        .map(|s| s.to_string())
-        .collect();
+    lines_domain.extend(url.lines().map(|s| s.to_string()));
 
     for line_domain in lines_domain {
         let domain = get_domain_by_url(&line_domain);
@@ -68,9 +57,7 @@ pub fn add_domain_in_config(url: &str) {
         match lines.binary_search(&domain) {
             Ok(_) => {}
             Err(_) => {
-                let mut file = OpenOptions::new()
-                    .append(true)
-                    .open(&core_path).unwrap();
+                let mut file = OpenOptions::new().append(true).open(&core_path).unwrap();
 
                 writeln!(file, "{}", domain).expect("ERROR: write in file");
             }

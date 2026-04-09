@@ -12,7 +12,7 @@ use crate::AppWindow;
 use crate::work_file_config;
 
 const PROCESS_NAME: &str = "winws.exe";
-const MAX_WAIT_PER_BAT: u64 = 3;
+const MAX_WAIT_PER_BAT: u64 = 5;
 
 
 pub fn manager(my_url: String, ui_handle: slint::Weak<AppWindow>) {
@@ -48,7 +48,7 @@ pub fn is_admin() -> bool {
 }
 
 // закрытие процесса winws для правильной работы всех батников и что бы они не конфликтовали
-fn kill_bypasses() {
+pub fn kill_bypasses() {
     let _ = process::Command::new("taskkill")
         .args(&["/F", "/IM", PROCESS_NAME])
         .stdout(process::Stdio::null())
@@ -64,7 +64,7 @@ fn check_address(url: &str) -> bool {
         .build().unwrap();
 
     match client.get(url).send() {
-        Ok(res) => res.status().as_u16() < 400,
+        Ok(res) => res.status().as_u16() == 200,
         Err(_) => false,
     }
 }

@@ -11,10 +11,12 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22e8821e-3cef-479b-ba57-3b96d84b3b06" name="Changes" comment="реализовал автодобавление доменна если его нет в файле конфигов">
+    <list default="true" id="22e8821e-3cef-479b-ba57-3b96d84b3b06" name="Changes" comment="реализовал добавления конфигов в ручную если необходимо">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/manager.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/manager.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/work_file_config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/work_file_config.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/app-window.slint" beforeDir="false" afterPath="$PROJECT_DIR$/ui/app-window.slint" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +119,7 @@
       <workItem from="1775714916559" duration="2144000" />
       <workItem from="1775724185395" duration="24000" />
       <workItem from="1775724535114" duration="483000" />
-      <workItem from="1775753062032" duration="12797000" />
+      <workItem from="1775753062032" duration="15394000" />
     </task>
     <task id="LOCAL-00001" summary="request for admin rights when opening a window">
       <option name="closed" value="true" />
@@ -135,7 +137,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775765310861</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="реализовал добавления конфигов в ручную если необходимо">
+      <option name="closed" value="true" />
+      <created>1775767334993</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1775767334993</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -155,6 +165,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="request for admin rights when opening a window" />
     <MESSAGE value="реализовал автодобавление доменна если его нет в файле конфигов" />
-    <option name="LAST_COMMIT_MESSAGE" value="реализовал автодобавление доменна если его нет в файле конфигов" />
+    <MESSAGE value="реализовал добавления конфигов в ручную если необходимо" />
+    <option name="LAST_COMMIT_MESSAGE" value="реализовал добавления конфигов в ручную если необходимо" />
   </component>
 </project>
