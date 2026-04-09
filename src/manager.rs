@@ -9,6 +9,7 @@ use winapi::um::winnt::{TokenElevation, HANDLE, TOKEN_ELEVATION, TOKEN_QUERY};
 
 use std::io::Write;
 use crate::AppWindow;
+use crate::work_file_config;
 
 const PROCESS_NAME: &str = "winws.exe";
 const MAX_WAIT_PER_BAT: u64 = 3;
@@ -27,6 +28,8 @@ pub fn manager(my_url: String, ui_handle: slint::Weak<AppWindow>) {
         log_to_gui(&ui_handle, "[!] ОШИБКА: ССЫЛКА НЕ УКАЗАНА".to_string());
         return;
     }
+
+    work_file_config::add_url_in_config(&url);
 
     run_bypasses(url, ui_handle);
 }
