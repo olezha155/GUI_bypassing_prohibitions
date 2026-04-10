@@ -10,7 +10,10 @@ use std::error::Error;
 use winapi::um::shellapi::ShellExecuteW;
 use winapi::um::winuser::SW_HIDE;
 use std::os::windows::ffi::OsStrExt;
+use std::{env, process};
+use std::os::windows::process::CommandExt;
 use std::ptr::null_mut;
+use slint::ModelRc;
 
 slint::include_modules!();
 
@@ -28,14 +31,35 @@ fn main() -> Result<(), Box<dyn Error>> {
     let ui = AppWindow::new()?;
     let ui_handle = ui.as_weak();
 
+    let items = work_file_config::get_bat_files();
+    let model = ModelRc::new(slint::VecModel::from(items));
+    ui.set_combo_options(model);
+
     // активация батников
-    ui.on_activate_clicked(move |url| {
+    ui.on_activate_clicked(move |url, config| {
         let ui_handle_for_thread = ui_handle.clone();
         let url_str = url.to_string();
+        let conf = config.to_string();
 
-        std::thread::spawn(move || {
-            manager::manager(url_str, ui_handle_for_thread);
-        });
+        if conf.eq("Auto") {
+            std::thread::spawn(move || {
+                manager::manager(url_str, ui_handle_for_thread);
+            });
+        } else {
+            let mut core_path = env::current_exe().unwrap();
+            core_path.pop();
+            core_path.push("core");
+
+            let child = process::Command::new("cmd")
+                .args(&["/C", &conf])
+                .current_dir(&core_path)
+                .creation_flags(0x08000000)
+                .spawn()
+                .expect("Ошибка запуска bat");
+
+            std::mem::forget(child);
+            manager::log_to_gui(&ui_handle, format!("[+] Подключено к {}", conf));
+        }
     });
 
     // добавления домена в конфиги

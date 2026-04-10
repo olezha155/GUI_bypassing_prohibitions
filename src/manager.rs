@@ -8,6 +8,7 @@ use winapi::um::securitybaseapi::GetTokenInformation;
 use winapi::um::winnt::{TokenElevation, HANDLE, TOKEN_ELEVATION, TOKEN_QUERY};
 
 use std::io::Write;
+
 use crate::AppWindow;
 use crate::work_file_config;
 
@@ -18,10 +19,15 @@ const MAX_WAIT_PER_BAT: u64 = 5;
 pub fn manager(my_url: String, ui_handle: slint::Weak<AppWindow>) {
     let args: Vec<String> = env::args().collect();
 
+    let mut lines_domain: Vec<String> = Vec::with_capacity(5);
+    lines_domain.extend(my_url.lines().map(|s| s.to_string()));
+
+    let line_domain = lines_domain.get(0).unwrap();
+
     let url = if args.len() > 1 {
         args[1].clone()
     } else {
-        my_url.trim().to_string()
+        line_domain.trim().to_string()
     };
 
     if url.is_empty() {
@@ -29,7 +35,7 @@ pub fn manager(my_url: String, ui_handle: slint::Weak<AppWindow>) {
         return;
     }
 
-    work_file_config::add_url_in_config(&url);
+    work_file_config::add_domain_in_config(&url);
 
     run_bypasses(url, ui_handle);
 }
@@ -75,7 +81,7 @@ fn run_bypasses(target_url: String, ui_handle: slint::Weak<AppWindow>) {
     core_path.pop();
     core_path.push("core");
 
-    log_to_gui(&ui_handle, format!("[*] Цель: {}", target_url));
+    log_to_gui(&ui_handle, format!("\n[*] Цель: {}", target_url));
     kill_bypasses();
 
     let paths = match fs::read_dir(&core_path) {
@@ -100,40 +106,43 @@ fn run_bypasses(target_url: String, ui_handle: slint::Weak<AppWindow>) {
 
     for bat in bat_files {
         let bat_name = bat.file_name().unwrap().to_string_lossy();
-        log_to_gui(&ui_handle, format!("[*] Пробуем: {}...", bat_name));
-        std::io::stdout().flush().unwrap();
 
-        let full_path = fs::canonicalize(&bat).expect("Не удалось получить путь");
-        let clean_path = full_path.to_string_lossy().replace(r"\\?\", "");
+        if bat_name != "service.bat" {
+            log_to_gui(&ui_handle, format!("\n[*] Пробуем: {}...", bat_name));
+            std::io::stdout().flush().unwrap();
 
-        let mut child = process::Command::new("cmd")
-            .args(&["/C", &clean_path])
-            .current_dir(&core_path)
-            .creation_flags(0x00000010)
-            .spawn()
-            .expect("Ошибка запуска bat");
+            let full_path = fs::canonicalize(&bat).expect("Не удалось получить путь");
+            let clean_path = full_path.to_string_lossy().replace(r"\\?\", "");
 
-        let start_time = time::Instant::now();
-        let mut success = false;
+            let mut child = process::Command::new("cmd")
+                .args(&["/C", &clean_path])
+                .current_dir(&core_path)
+                .creation_flags(0x08000000)
+                .spawn()
+                .expect("Ошибка запуска bat");
 
-        while start_time.elapsed().as_secs() < MAX_WAIT_PER_BAT {
-            if check_address(&target_url) {
-                success = true;
-                break;
+            let start_time = time::Instant::now();
+            let mut success = false;
+
+            while start_time.elapsed().as_secs() < MAX_WAIT_PER_BAT {
+                if check_address(&target_url) {
+                    success = true;
+                    break;
+                }
+                thread::sleep(time::Duration::from_millis(MAX_WAIT_PER_BAT * 100));
             }
-            thread::sleep(time::Duration::from_millis(MAX_WAIT_PER_BAT * 100));
-        }
 
-        if success {
-            log_to_gui(&ui_handle, "\n[+] РАБОТАЕТ!".to_string());
+            if success {
+                log_to_gui(&ui_handle, "\n[+] РАБОТАЕТ!".to_string());
 
-            std::mem::forget(child);
-            return;
-        } else {
-            log_to_gui(&ui_handle, "нет доступа.".to_string());
-            let _ = child.kill();
-            kill_bypasses();
-            thread::sleep(time::Duration::from_millis(MAX_WAIT_PER_BAT * 100));
+                std::mem::forget(child);
+                return;
+            } else {
+                log_to_gui(&ui_handle, "нет доступа.".to_string());
+                let _ = child.kill();
+                kill_bypasses();
+                thread::sleep(time::Duration::from_millis(MAX_WAIT_PER_BAT * 100));
+            }
         }
     }
 
@@ -141,12 +150,12 @@ fn run_bypasses(target_url: String, ui_handle: slint::Weak<AppWindow>) {
 }
 
 // логирование
-fn log_to_gui(ui_handle: &slint::Weak<AppWindow>, msg: String) {
+pub fn log_to_gui(ui_handle: &slint::Weak<AppWindow>, msg: String) {
     let ui_handle = ui_handle.clone();
     let _ = slint::invoke_from_event_loop(move || {
         if let Some(ui) = ui_handle.upgrade() {
             let current = ui.get_status_log();
-            ui.set_status_log(format!("{}\n{}", current, msg).into());
+            ui.set_status_log(format!("{} {}", current, msg).into());
         }
     });
 }

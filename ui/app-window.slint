@@ -1,4 +1,4 @@
-import { Button, VerticalBox, TextEdit, ScrollView } from "std-widgets.slint";
+import { Button, VerticalBox, TextEdit, ScrollView, HorizontalBox, ComboBox, ListView } from "std-widgets.slint";
 
 export component AppWindow inherits Window {
     title: "Bypassing Prohibitions";
@@ -7,56 +7,69 @@ export component AppWindow inherits Window {
     width: 600px;
 
     in-out property <string> status_log: "Готов к работе...";
+    in-out property <[string]> combo_options: ["Auto"];
 
     property <string> url_to_activate;
-    property <string> url_to_config;
 
-    callback activate_clicked(string);
+    property <string> selected_config: root.combo_options[0]; 
+
+    callback activate_clicked(string, string);
     callback config_add_clicked(string);
 
 
     Rectangle {
 
         TextEdit {
-            height: 40px; width: 430px;
+            height: 55px; width: parent.width - 40px;
             x: 19px; y: 23px; 
 
-            placeholder-text: "Укажите URL на нужно применить обход (https://google.com)";
+            placeholder-text: "Укажите ссылку (https://google.com)";
+            font-size: 13.7px;
             edited(text) => { root.url_to_activate = text; }
         }
 
-        Button {
-            height: 40px; width: 120px;
-            x: 466px; y: 23px;
+        ComboBox {
+            y: 90px;
+            width: parent.width - 40px;
 
-            text: "Активировать";
-            clicked => { root.activate_clicked(root.url_to_activate); }
+            model: root.combo_options;
+            current-index: 0;
+            selected(current-value) => { root.selected_config = current_value;  }
         }
 
-        TextEdit {
-            height: 60px; width: 430px;
-            x: 19px; y: 93px; 
+        HorizontalBox {
+            y: 130px; x: 160px;
+            spacing: 15px;
+        
+            Button {
+                height: 40px; width: 120px;
 
-            placeholder-text: "Укажите URL для добавления в конфиги обхода (https://google.com)";
-            edited(text) => { root.url_to_config = text; }
-        }
+                text: "Активировать";
+                clicked => { root.activate_clicked(root.url_to_activate, root.selected_config); }
+            }  
 
-        Button {
-            height: 60px; width: 120px;
-            x: 466px; y: 93px;
+            Button {
+                height: 40px; width: 179px;
 
-            text: "Добавить в\nконфигурацию";
-            clicked => { root.config_add_clicked(root.url_to_config) }
+                text: "Добавить в конфигурацию";
+                clicked => { root.config_add_clicked(root.url_to_activate) }
+            }
         }
 
         Rectangle {
-            x: 19px; y: 170px;
-            width: 567px; height: 210px;
+            x: 19px; y: 200px;
+            width: 567px; height: 180px;
             background: #2a2a2a;
             border-radius: 4px;
+            clip: true;
 
             ScrollView {
+                width: 100%;
+                height: 100%;
+                viewport-width: parent.width - 20px; 
+
                 Text {
+                    x: 15px; y: 10px;
                     width: parent.width; 
 
                     text: root.status_log;
@@ -65,7 +78,7 @@ export component AppWindow inherits Window {
                     font-family: "Consolas";
                     font-size: 14px;
                     wrap: word-wrap;
-                    horizontal-alignment: center;
+                    horizontal-alignment: left;
                 }
             }
         }

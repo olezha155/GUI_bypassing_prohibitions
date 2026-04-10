@@ -11,8 +11,9 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22e8821e-3cef-479b-ba57-3b96d84b3b06" name="Changes" comment="реализовал добавления конфигов в ручную если необходимо">
+    <list default="true" id="22e8821e-3cef-479b-ba57-3b96d84b3b06" name="Changes" comment="настроил более приятное гуи, добавил закрытие winws после завершения программы, изменил время отклика с сайта и установил код ответа только на 200, сделал выделение памяти стазу под вектора чтобы не перезаписывать их каждый раз">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/manager.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/manager.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/work_file_config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/work_file_config.rs" afterDir="false" />
@@ -49,30 +50,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Cargo.Run.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.rust.reset.selective.auto.import": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "master",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "D:/RustProject/GUI_bypassing_prohibitions/target/debug",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "org.rust.cargo.project.model.PROJECT_DISCOVERY": "true",
-    "org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon": "",
-    "org.rust.disableDetachedFileInspectionD:/RustProject/GUI_bypassing_prohibitions/src/main.rs": "true",
-    "org.rust.first.attach.projects": "true",
-    "to.speed.mode.migration.done": "true",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Cargo.Run.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/RustProject/GUI_bypassing_prohibitions/target/debug&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;org.rust.cargo.project.model.PROJECT_DISCOVERY&quot;: &quot;true&quot;,
+    &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
+    &quot;org.rust.disableDetachedFileInspectionD:/RustProject/GUI_bypassing_prohibitions/src/main.rs&quot;: &quot;true&quot;,
+    &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\RustProject\GUI_bypassing_prohibitions\target\debug" />
@@ -119,7 +121,10 @@
       <workItem from="1775714916559" duration="2144000" />
       <workItem from="1775724185395" duration="24000" />
       <workItem from="1775724535114" duration="483000" />
-      <workItem from="1775753062032" duration="15394000" />
+      <workItem from="1775753062032" duration="15722000" />
+      <workItem from="1775808593582" duration="323000" />
+      <workItem from="1775809094626" duration="1420000" />
+      <workItem from="1775812017663" duration="7179000" />
     </task>
     <task id="LOCAL-00001" summary="request for admin rights when opening a window">
       <option name="closed" value="true" />
@@ -145,7 +150,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775767334993</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="настроил более приятное гуи, добавил закрытие winws после завершения программы, изменил время отклика с сайта и установил код ответа только на 200, сделал выделение памяти стазу под вектора чтобы не перезаписывать их каждый раз">
+      <option name="closed" value="true" />
+      <created>1775770048821</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1775770048821</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -166,6 +179,7 @@
     <MESSAGE value="request for admin rights when opening a window" />
     <MESSAGE value="реализовал автодобавление доменна если его нет в файле конфигов" />
     <MESSAGE value="реализовал добавления конфигов в ручную если необходимо" />
-    <option name="LAST_COMMIT_MESSAGE" value="реализовал добавления конфигов в ручную если необходимо" />
+    <MESSAGE value="настроил более приятное гуи, добавил закрытие winws после завершения программы, изменил время отклика с сайта и установил код ответа только на 200, сделал выделение памяти стазу под вектора чтобы не перезаписывать их каждый раз" />
+    <option name="LAST_COMMIT_MESSAGE" value="настроил более приятное гуи, добавил закрытие winws после завершения программы, изменил время отклика с сайта и установил код ответа только на 200, сделал выделение памяти стазу под вектора чтобы не перезаписывать их каждый раз" />
   </component>
 </project>
