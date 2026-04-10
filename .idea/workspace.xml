@@ -11,13 +11,11 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22e8821e-3cef-479b-ba57-3b96d84b3b06" name="Changes" comment="настроил более приятное гуи, добавил закрытие winws после завершения программы, изменил время отклика с сайта и установил код ответа только на 200, сделал выделение памяти стазу под вектора чтобы не перезаписывать их каждый раз">
+    <list default="true" id="22e8821e-3cef-479b-ba57-3b96d84b3b06" name="Changes" comment="сделал более приятный интерфейс, сделал список для выбора стандартного батника, скрыл консоль админа, добавил функцию для чтения всех имен батников">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/manager.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/manager.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/work_file_config.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/work_file_config.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/app-window.slint" beforeDir="false" afterPath="$PROJECT_DIR$/ui/app-window.slint" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +122,7 @@
       <workItem from="1775753062032" duration="15722000" />
       <workItem from="1775808593582" duration="323000" />
       <workItem from="1775809094626" duration="1420000" />
-      <workItem from="1775812017663" duration="7179000" />
+      <workItem from="1775812017663" duration="9358000" />
     </task>
     <task id="LOCAL-00001" summary="request for admin rights when opening a window">
       <option name="closed" value="true" />
@@ -158,7 +156,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775770048821</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="сделал более приятный интерфейс, сделал список для выбора стандартного батника, скрыл консоль админа, добавил функцию для чтения всех имен батников">
+      <option name="closed" value="true" />
+      <created>1775820357622</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1775820357622</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -180,6 +186,7 @@
     <MESSAGE value="реализовал автодобавление доменна если его нет в файле конфигов" />
     <MESSAGE value="реализовал добавления конфигов в ручную если необходимо" />
     <MESSAGE value="настроил более приятное гуи, добавил закрытие winws после завершения программы, изменил время отклика с сайта и установил код ответа только на 200, сделал выделение памяти стазу под вектора чтобы не перезаписывать их каждый раз" />
-    <option name="LAST_COMMIT_MESSAGE" value="настроил более приятное гуи, добавил закрытие winws после завершения программы, изменил время отклика с сайта и установил код ответа только на 200, сделал выделение памяти стазу под вектора чтобы не перезаписывать их каждый раз" />
+    <MESSAGE value="сделал более приятный интерфейс, сделал список для выбора стандартного батника, скрыл консоль админа, добавил функцию для чтения всех имен батников" />
+    <option name="LAST_COMMIT_MESSAGE" value="сделал более приятный интерфейс, сделал список для выбора стандартного батника, скрыл консоль админа, добавил функцию для чтения всех имен батников" />
   </component>
 </project>

@@ -46,6 +46,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 manager::manager(url_str, ui_handle_for_thread);
             });
         } else {
+            manager::kill_bypasses();
             let mut core_path = env::current_exe().unwrap();
             core_path.pop();
             core_path.push("core");
@@ -58,7 +59,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                 .expect("Ошибка запуска bat");
 
             std::mem::forget(child);
-            manager::log_to_gui(&ui_handle, format!("[+] Подключено к {}", conf));
+            manager::log_to_gui(&ui_handle, format!("\n[+] Подключено к {}", conf));
         }
     });
 

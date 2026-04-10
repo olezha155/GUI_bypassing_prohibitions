@@ -65,7 +65,7 @@ pub fn kill_bypasses() {
 // проверка на то url работает под запущенным батником
 fn check_address(url: &str) -> bool {
     let client = reqwest::blocking::Client::builder()
-        .timeout(time::Duration::from_millis(1500))
+        .timeout(time::Duration::from_millis(500))
         .danger_accept_invalid_certs(true)
         .build().unwrap();
 

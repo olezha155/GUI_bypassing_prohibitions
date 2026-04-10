@@ -59,7 +59,7 @@ pub fn get_bat_files() -> Vec<SharedString> {
     core_path.push("core");
 
     let mut bat_files: Vec<SharedString> = Vec::with_capacity(20);
-    bat_files.push("None".into());
+    bat_files.push("Auto".into());
 
     if let Ok(entries) = fs::read_dir(core_path) {
         for entry in entries.flatten() {
