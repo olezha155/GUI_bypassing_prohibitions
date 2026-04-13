@@ -65,7 +65,7 @@ pub fn kill_bypasses() {
 // проверка на то url работает под запущенным батником
 fn check_address(url: &str) -> bool {
     let client = reqwest::blocking::Client::builder()
-        .timeout(time::Duration::from_millis(500))
+        .timeout(time::Duration::from_millis(1500))
         .danger_accept_invalid_certs(true)
         .build().unwrap();
 
@@ -119,7 +119,7 @@ fn run_bypasses(target_url: String, ui_handle: slint::Weak<AppWindow>) {
                 .current_dir(&core_path)
                 .creation_flags(0x08000000)
                 .spawn()
-                .expect("Ошибка запуска bat");
+                .expect("ошибка запуска bat");
 
             let start_time = time::Instant::now();
             let mut success = false;
@@ -129,7 +129,7 @@ fn run_bypasses(target_url: String, ui_handle: slint::Weak<AppWindow>) {
                     success = true;
                     break;
                 }
-                thread::sleep(time::Duration::from_millis(MAX_WAIT_PER_BAT * 100));
+                thread::sleep(time::Duration::from_millis(1000));
             }
 
             if success {
@@ -141,7 +141,7 @@ fn run_bypasses(target_url: String, ui_handle: slint::Weak<AppWindow>) {
                 log_to_gui(&ui_handle, "нет доступа.".to_string());
                 let _ = child.kill();
                 kill_bypasses();
-                thread::sleep(time::Duration::from_millis(MAX_WAIT_PER_BAT * 100));
+                thread::sleep(time::Duration::from_millis(1000));
             }
         }
     }

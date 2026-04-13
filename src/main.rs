@@ -47,12 +47,13 @@ fn main() -> Result<(), Box<dyn Error>> {
             });
         } else {
             manager::kill_bypasses();
+            
             let mut core_path = env::current_exe().unwrap();
             core_path.pop();
             core_path.push("core");
 
             let child = process::Command::new("cmd")
-                .args(&["/C", &conf])
+                .args(&["/C", "start", "/b", &conf])
                 .current_dir(&core_path)
                 .creation_flags(0x08000000)
                 .spawn()
