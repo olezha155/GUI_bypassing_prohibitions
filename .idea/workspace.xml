@@ -12,9 +12,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="22e8821e-3cef-479b-ba57-3b96d84b3b06" name="Changes" comment="починил авто поиск батников, сделал чтобы при ручной активации батников старый не перебивал новую активацию">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/manager.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/manager.rs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ui/app-window.slint" beforeDir="false" afterPath="$PROJECT_DIR$/ui/app-window.slint" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,6 +123,7 @@
       <workItem from="1775809094626" duration="1420000" />
       <workItem from="1775812017663" duration="9680000" />
       <workItem from="1775822581456" duration="904000" />
+      <workItem from="1776154725248" duration="109000" />
     </task>
     <task id="LOCAL-00001" summary="request for admin rights when opening a window">
       <option name="closed" value="true" />

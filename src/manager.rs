@@ -1,6 +1,6 @@
-use std::{env, fs, process, thread, time};
 use std::os::windows::process::CommandExt;
 use std::ptr::null_mut;
+use std::{env, fs, process, thread, time};
 
 use winapi::um::handleapi::CloseHandle;
 use winapi::um::processthreadsapi::{GetCurrentProcess, OpenProcessToken};
@@ -8,14 +8,20 @@ use winapi::um::securitybaseapi::GetTokenInformation;
 use winapi::um::winnt::{TokenElevation, HANDLE, TOKEN_ELEVATION, TOKEN_QUERY};
 
 use std::io::Write;
+use std::sync::RwLock;
 
-use crate::AppWindow;
 use crate::work_file_config;
+use crate::AppWindow;
 
 const PROCESS_NAME: &str = "winws.exe";
-const MAX_WAIT_PER_BAT: u64 = 5;
 
+pub struct TimeConnectSite {
+    pub max_wait_per_bat: u64,
+}
 
+pub static SETTINGS: RwLock<TimeConnectSite> = RwLock::new(TimeConnectSite {
+    max_wait_per_bat: 5,
+});
 pub fn manager(my_url: String, ui_handle: slint::Weak<AppWindow>) {
     let args: Vec<String> = env::args().collect();
 
@@ -44,10 +50,18 @@ pub fn manager(my_url: String, ui_handle: slint::Weak<AppWindow>) {
 pub fn is_admin() -> bool {
     let mut handle: HANDLE = null_mut();
     unsafe {
-        if OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &mut handle) == 0 { return false; }
+        if OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &mut handle) == 0 {
+            return false;
+        }
         let mut elevation = TOKEN_ELEVATION { TokenIsElevated: 0 };
         let mut size = size_of::<TOKEN_ELEVATION>() as u32;
-        let ret = GetTokenInformation(handle, TokenElevation, &mut elevation as *mut _ as *mut _, size, &mut size);
+        let ret = GetTokenInformation(
+            handle,
+            TokenElevation,
+            &mut elevation as *mut _ as *mut _,
+            size,
+            &mut size,
+        );
         CloseHandle(handle);
         ret != 0 && elevation.TokenIsElevated != 0
     }
@@ -67,7 +81,8 @@ fn check_address(url: &str) -> bool {
     let client = reqwest::blocking::Client::builder()
         .timeout(time::Duration::from_millis(1500))
         .danger_accept_invalid_certs(true)
-        .build().unwrap();
+        .build()
+        .unwrap();
 
     match client.get(url).send() {
         Ok(res) => res.status().as_u16() == 200,
@@ -87,7 +102,10 @@ fn run_bypasses(target_url: String, ui_handle: slint::Weak<AppWindow>) {
     let paths = match fs::read_dir(&core_path) {
         Ok(p) => p,
         Err(_) => {
-            log_to_gui(&ui_handle, "[!] ОШИБКА: Папка 'core' не найдена рядом с EXE".to_string());
+            log_to_gui(
+                &ui_handle,
+                "[!] ОШИБКА: Папка 'core' не найдена рядом с EXE".to_string(),
+            );
             return;
         }
     };
@@ -96,7 +114,8 @@ fn run_bypasses(target_url: String, ui_handle: slint::Weak<AppWindow>) {
         .filter_map(|r| r.ok())
         .map(|e| e.path())
         .filter(|p| {
-            let name = p.file_name()
+            let name = p
+                .file_name()
                 .map(|n| n.to_string_lossy().to_lowercase())
                 .unwrap_or_default();
 
@@ -104,10 +123,14 @@ fn run_bypasses(target_url: String, ui_handle: slint::Weak<AppWindow>) {
         })
         .collect();
 
+    let limit = crate::SETTINGS.read().unwrap().max_wait_per_bat;
+
     for bat in bat_files {
         let bat_name = bat.file_name().unwrap().to_string_lossy();
 
         if bat_name != "service.bat" {
+            kill_bypasses();
+
             log_to_gui(&ui_handle, format!("\n[*] Пробуем: {}...", bat_name));
             std::io::stdout().flush().unwrap();
 
@@ -124,7 +147,7 @@ fn run_bypasses(target_url: String, ui_handle: slint::Weak<AppWindow>) {
             let start_time = time::Instant::now();
             let mut success = false;
 
-            while start_time.elapsed().as_secs() < MAX_WAIT_PER_BAT {
+            while start_time.elapsed().as_secs() < limit {
                 if check_address(&target_url) {
                     success = true;
                     break;
@@ -159,4 +182,3 @@ pub fn log_to_gui(ui_handle: &slint::Weak<AppWindow>, msg: String) {
         }
     });
 }
-

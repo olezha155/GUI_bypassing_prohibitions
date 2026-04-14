@@ -2,18 +2,20 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod manager;
-mod work_file_config;
 mod merge_sort;
+mod work_file_config;
 
 use std::error::Error;
 
-use winapi::um::shellapi::ShellExecuteW;
-use winapi::um::winuser::SW_HIDE;
+use slint::ModelRc;
 use std::os::windows::ffi::OsStrExt;
-use std::{env, process};
 use std::os::windows::process::CommandExt;
 use std::ptr::null_mut;
-use slint::ModelRc;
+use std::{env, process};
+use winapi::um::shellapi::ShellExecuteW;
+use winapi::um::winuser::SW_HIDE;
+
+use crate::manager::SETTINGS;
 
 slint::include_modules!();
 
@@ -24,7 +26,16 @@ fn main() -> Result<(), Box<dyn Error>> {
         let file: Vec<u16> = exe_path.as_os_str().encode_wide().chain(Some(0)).collect();
         let operation: Vec<u16> = "runas\0".encode_utf16().collect();
 
-        unsafe { ShellExecuteW(null_mut(), operation.as_ptr(), file.as_ptr(), null_mut(), null_mut(), SW_HIDE); }
+        unsafe {
+            ShellExecuteW(
+                null_mut(),
+                operation.as_ptr(),
+                file.as_ptr(),
+                null_mut(),
+                null_mut(),
+                SW_HIDE,
+            );
+        }
         return Ok(());
     }
 
@@ -47,7 +58,7 @@ fn main() -> Result<(), Box<dyn Error>> {
             });
         } else {
             manager::kill_bypasses();
-            
+
             let mut core_path = env::current_exe().unwrap();
             core_path.pop();
             core_path.push("core");
@@ -66,10 +77,24 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // добавления домена в конфиги
     ui.on_config_add_clicked(move |url| {
-        std::thread::spawn(move || {
-            work_file_config::add_domain_in_config(url.as_str())
-        });
+        std::thread::spawn(move || work_file_config::add_domain_in_config(url.as_str()));
     });
+
+    {
+        let ui_handle = ui.as_weak();
+
+        if let Some(ui) = ui_handle.upgrade() {
+            ui.set_time_connect_to_site("5".into());
+        }
+
+        ui.on_exit_from_settings({
+            move |text| {
+                let mut settings = SETTINGS.write().unwrap();
+
+                settings.max_wait_per_bat = text.parse::<u64>().unwrap();
+            }
+        });
+    }
 
     ui.run()?;
     manager::kill_bypasses();

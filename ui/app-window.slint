@@ -15,7 +15,7 @@ export component AppWindow inherits Window {
     property <bool> show_settings: false; // флаг для управления окном настроек
 
     property <string> url_to_activate; // переменная получающая url
-    property <string> time_connect_to_site; // переменная получающая время подключения
+    in-out property <string> time_connect_to_site; // переменная получающая время подключения
     
     // событие для подключения 
     callback activate_clicked(string, string); 
@@ -102,7 +102,7 @@ export component AppWindow inherits Window {
 
         Rectangle {
             width: 80%;
-            height: 80%;
+            height: 85%;
             background: root.background;
             border-radius: 8px;
             border-width: 1px;
@@ -119,11 +119,10 @@ export component AppWindow inherits Window {
                 }
 
                 Text {  }
+                Text { text: "Укажите время подключения..."; }
                 TextEdit { 
                     height: 50px;
-                    placeholder-text: "Укажите время подключения..."; 
-
-                    edited(text) => { root.time_connect_to_site = text; }
+                    text <=> root.time_connect_to_site;
                 }
 
                 Text {  }

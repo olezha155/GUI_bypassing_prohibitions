@@ -1,6 +1,9 @@
 [package]
 name = "GUI_bypassing_prohibitions"
 version = "0.1.0"
+authors = ["Олег olezha155@gmail.com"]
+description = "Программа для обхода не желательных юлокировок"
+homepage =  "https://github.com/olezha155/GUI_bypassing_prohibitions"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -21,3 +24,6 @@ slint-build = "1.14.1"
 [profile.release]
 codegen-units = 1
 lto = true
+
+[package.metadata.wix]
+eula = false
