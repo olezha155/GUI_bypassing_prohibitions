@@ -1,27 +1,34 @@
 import { Button, VerticalBox, TextEdit, ScrollView, HorizontalBox, ComboBox, ListView, StandardButton, SpinBox } from "std-widgets.slint";
+import { Theme } from "theme.slint";
+
+export { Theme }
 
 export component AppWindow inherits Window {
+    background: Theme.background;
+
     title: "Bypassing Prohibitions";
     height: 400px;
     width: 600px;
 
+    in-out property <bool> dark-mode <=> Theme.is-dark; // переменная для управления темой и построения моста к бэку
+    
     // массив для combobox
     in-out property <[string]> combo_options: ["Auto"];
 
     // начальное значение для отображения логов
     in-out property <string> status_log: "Готов к работе...";
+    in-out property <string> time_connect_to_site; // переменная получающая время подключения
     
     property <string> selected_config: root.combo_options[0]; // получение начального значения для combobox
     property <bool> show_settings: false; // флаг для управления окном настроек
-
     property <string> url_to_activate; // переменная получающая url
-    in-out property <string> time_connect_to_site; // переменная получающая время подключения
     
     // событие для подключения 
     callback activate_clicked(string, string); 
     
     callback config_add_clicked(string); // событие для добавления в конфиги
     callback exit_from_settings(string); // событие для выхода с получением настроек
+    callback save_config(bool); // событие для отправки выбранной темы на бэк
 
     // главное окно
     main_layout := Rectangle {
@@ -129,6 +136,12 @@ export component AppWindow inherits Window {
                 Text { text: "Темы:"; }
                 ComboBox {
                     model: ["Темная", "Светлая"];
+                    current-value: Theme.is-dark ? "Темная" : "Светлая";
+            
+                    selected(val) => {
+                        Theme.is-dark = (val == "Темная");
+                        root.save_config(Theme.is-dark);
+                    }
                 }
 
                 Text {  }

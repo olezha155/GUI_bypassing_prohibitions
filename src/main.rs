@@ -17,7 +17,14 @@ use winapi::um::winuser::SW_HIDE;
 
 use crate::manager::SETTINGS;
 
+use serde::{Deserialize, Serialize};
+
 slint::include_modules!();
+
+#[derive(Serialize, Deserialize, Default)]
+struct AppConfig {
+    dark_mode: bool,
+}
 
 fn main() -> Result<(), Box<dyn Error>> {
     // проверка, что у пользователя есть админка
@@ -80,6 +87,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         std::thread::spawn(move || work_file_config::add_domain_in_config(url.as_str()));
     });
 
+    // установка времени подключения к сайту
     {
         let ui_handle = ui.as_weak();
 
@@ -93,6 +101,20 @@ fn main() -> Result<(), Box<dyn Error>> {
 
                 settings.max_wait_per_bat = text.parse::<u64>().unwrap();
             }
+        });
+    }
+
+    {
+        let config_name = "gui_app_prefs";
+
+        // 1. Загружаем конфиг
+        let saved_cfg: AppConfig = confy::load(config_name, None).unwrap_or_default();
+
+        ui.set_dark_mode(saved_cfg.dark_mode);
+
+        ui.on_save_config(move |is_dark| {
+            // Rust просто меняет свойство окна, а Slint сам обновит Theme через <=>
+            let _ = confy::store(config_name, None, AppConfig { dark_mode: is_dark });
         });
     }
 
