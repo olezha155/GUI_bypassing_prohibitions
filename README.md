@@ -5,7 +5,7 @@
 
 UI/UX интерфейс построен на [Slint](https://slint.dev/). Backend написан на rust с ним можно познакомится на [RustBook](https://doc.rust-lang.ru/book/). Техналогия winws и батники взяты с репозитория от [Flowseal](https://github.com/Flowseal/zapret-discord-youtube)
 
-Установщик находится во вкладке **Releases**
+Установщик находится во вкладке **[Releases](https://github.com/olezha155/GUI_bypassing_prohibitions/releases)**
 
 ---
 
