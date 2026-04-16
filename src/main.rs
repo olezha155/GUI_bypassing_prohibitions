@@ -19,9 +19,8 @@ use crate::manager::SETTINGS;
 
 use serde::{Deserialize, Serialize};
 
-use slint::SharedString;
 use std::fs::File;
-use std::io::BufReader;
+use std::io::Write;
 
 slint::include_modules!();
 
@@ -129,14 +128,26 @@ fn main() -> Result<(), Box<dyn Error>> {
 
             let mut core_path = env::current_exe().unwrap();
             core_path.pop();
-            core_path.push("core");
-            core_path.push("lists");
-            core_path.push("list-general.txt");
+            core_path.extend(["core", "lists", "list-general.txt"]);
 
-            let content = std::fs::read_to_string(&core_path)
-                .unwrap_or_else(|_| "Ошибка: файл не найден".to_string());
+            let content = std::fs::read_to_string(&core_path).unwrap_or_else(|_| String::new());
 
-            win.set_all_config(slint::SharedString::from(content));
+            win.set_all_config(slint::SharedString::from(&content));
+
+            let path_clone = core_path.clone();
+            let win_weak = win.as_weak();
+
+            win.on_save_config(move || {
+                if let Some(win) = win_weak.upgrade() {
+                    let current_text = win.get_all_config();
+
+                    if let Ok(mut file) = File::create(&path_clone) {
+                        let _ = file.write_all(current_text.as_bytes());
+                    }
+
+                    win.hide().unwrap();
+                }
+            });
 
             win.show().unwrap();
             std::mem::forget(win);

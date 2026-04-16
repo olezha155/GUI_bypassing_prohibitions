@@ -114,7 +114,7 @@ export component AppWindow inherits Window {
 
         Rectangle {
             width: 80%;
-            height: 85%;
+            height: 77%;
             background: root.background;
             border-radius: 8px;
             border-width: 1px;
@@ -131,14 +131,21 @@ export component AppWindow inherits Window {
                 }
 
                 Text {  }
-                Text { text: "Укажите время подключения..."; }
+                Text { 
+                    text: "Укажите время подключения..."; 
+                    font-size: 14px;
+                }
                 TextEdit { 
                     height: 50px;
                     text <=> root.time_connect_to_site;
+                    font-size: 14px;
                 }
 
                 Text {  }
-                Text { text: "Темы:"; }
+                Text { 
+                    text: "Темы:";
+                    font-size: 14px; 
+                }
                 ComboBox {
                     model: ["Темная", "Светлая"];
                     current-value: Theme.is-dark ? "Темная" : "Светлая";
@@ -149,20 +156,18 @@ export component AppWindow inherits Window {
                     }
                 }
 
-                Text {  }
+                Text { text: "\n"; }
                 Rectangle {
 
                     Button {
                         text: "Просмотреть текущую конфигурацю";
+                        x: 15px;
                         clicked => { root.print_config(); }
                     }
-                }
-
-                Rectangle {
 
                     Button {
                         text: "Закрыть и сохранить";
-                        
+                        x: 270px;
                         clicked => { 
                             root.show_settings = false; 
                             root.exit_from_settings(root.time_connect_to_site);

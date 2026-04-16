@@ -6,7 +6,10 @@ export component UpReadConfAll inherits Window {
     title: "All your configurate";
     height: 400px;
     width: 600px;
-    in-out property <string> all_config;
+    in-out property <string> all_config; // переменная для записи всех доменов из конфига и передачи из в TextEdit
+
+    callback save_config(); // событие для сохранения новых доменов
+
     Rectangle {
         TextEdit {
             width: parent.width;
@@ -18,6 +21,9 @@ export component UpReadConfAll inherits Window {
             x: 440px;
             y: 363px;
             text: "Сохранится и выйти";
+            clicked => {
+                root.save_config();
+            }
         }
     }
 }
