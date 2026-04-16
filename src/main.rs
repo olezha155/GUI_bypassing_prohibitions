@@ -19,6 +19,10 @@ use crate::manager::SETTINGS;
 
 use serde::{Deserialize, Serialize};
 
+use slint::SharedString;
+use std::fs::File;
+use std::io::BufReader;
+
 slint::include_modules!();
 
 #[derive(Serialize, Deserialize, Default)]
@@ -115,6 +119,27 @@ fn main() -> Result<(), Box<dyn Error>> {
         ui.on_save_config(move |is_dark| {
             // Rust просто меняет свойство окна, а Slint сам обновит Theme через <=>
             let _ = confy::store(config_name, None, AppConfig { dark_mode: is_dark });
+        });
+    }
+
+    // вывод конфига пользователя
+    {
+        ui.on_print_config(move || {
+            let win = UpReadConfAll::new().unwrap();
+
+            let mut core_path = env::current_exe().unwrap();
+            core_path.pop();
+            core_path.push("core");
+            core_path.push("lists");
+            core_path.push("list-general.txt");
+
+            let content = std::fs::read_to_string(&core_path)
+                .unwrap_or_else(|_| "Ошибка: файл не найден".to_string());
+
+            win.set_all_config(slint::SharedString::from(content));
+
+            win.show().unwrap();
+            std::mem::forget(win);
         });
     }
 

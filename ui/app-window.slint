@@ -1,7 +1,10 @@
 import { Button, VerticalBox, TextEdit, ScrollView, HorizontalBox, ComboBox, ListView, StandardButton, SpinBox } from "std-widgets.slint";
-import { Theme } from "theme.slint";
 
+import { Theme } from "theme.slint";
 export { Theme }
+
+import { UpReadConfAll } from "window-up-read-config-all.slint";
+export { UpReadConfAll }
 
 export component AppWindow inherits Window {
     background: Theme.background;
@@ -29,6 +32,8 @@ export component AppWindow inherits Window {
     callback config_add_clicked(string); // событие для добавления в конфиги
     callback exit_from_settings(string); // событие для выхода с получением настроек
     callback save_config(bool); // событие для отправки выбранной темы на бэк
+
+    callback print_config();
 
     // главное окно
     main_layout := Rectangle {
@@ -149,6 +154,7 @@ export component AppWindow inherits Window {
 
                     Button {
                         text: "Просмотреть текущую конфигурацю";
+                        clicked => { root.print_config(); }
                     }
                 }
 

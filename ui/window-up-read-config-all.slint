@@ -1,0 +1,23 @@
+import { Button, TextEdit } from "std-widgets.slint";
+import { Theme } from "theme.slint";
+
+export component UpReadConfAll inherits Window {
+    background: Theme.background;
+    title: "All your configurate";
+    height: 400px;
+    width: 600px;
+    in-out property <string> all_config;
+    Rectangle {
+        TextEdit {
+            width: parent.width;
+            height: parent.height - 42px;
+            y: 0;
+            text <=> root.all_config;
+        }
+        Button {
+            x: 440px;
+            y: 363px;
+            text: "Сохранится и выйти";
+        }
+    }
+}
