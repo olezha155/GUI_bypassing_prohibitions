@@ -2,10 +2,17 @@ import { Button, TextEdit } from "std-widgets.slint";
 import { Theme } from "theme.slint";
 
 export component UpReadConfAll inherits Window {
+    init => {
+        Theme.is-dark = root.dark-mode;
+    }
+    changed dark_mode => {
+        Theme.is-dark = root.dark-mode;
+    }
     background: Theme.background;
     title: "All your configurate";
     height: 400px;
     width: 600px;
+    in-out property <bool> dark_mode;
     in-out property <string> all_config; // переменная для записи всех доменов из конфига и передачи из в TextEdit
 
     callback save_config(); // событие для сохранения новых доменов

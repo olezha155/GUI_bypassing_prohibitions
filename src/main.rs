@@ -123,6 +123,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     // вывод конфига пользователя
     {
+        let ui_handle_for_conf = ui.as_weak();
+
         ui.on_print_config(move || {
             let win = UpReadConfAll::new().unwrap();
 
@@ -149,7 +151,35 @@ fn main() -> Result<(), Box<dyn Error>> {
                 }
             });
 
+            if let Some(main_ui) = ui_handle_for_conf.upgrade() {
+                win.set_dark_mode(main_ui.get_dark_mode());
+            }
+
             win.show().unwrap();
+            std::mem::forget(win);
+        });
+    }
+
+    {
+        // Создаем клон для использования внутри замыкания
+        let ui_handle_for_help = ui.as_weak();
+
+        ui.on_open_help(move || {
+            let help_text = std::fs::read_to_string("./help.txt").unwrap_or_else(|_| {
+                "Ошибка: файл help.txt не найден в директории приложения.".to_string()
+            });
+
+            let win = Help::new().unwrap();
+
+            // Используем клон хендла
+            if let Some(main_ui) = ui_handle_for_help.upgrade() {
+                win.set_dark_mode(main_ui.get_dark_mode());
+            }
+
+            win.set_help_content(help_text.into());
+            win.show().unwrap();
+
+            // Предотвращаем уничтожение окна сразу после выхода из области видимости
             std::mem::forget(win);
         });
     }

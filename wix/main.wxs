@@ -42,6 +42,10 @@
                         <File Id='exe0' Name='GUI_bypassing_prohibitions.exe' Source='$(var.CargoTargetBinDir)\GUI_bypassing_prohibitions.exe' KeyPath='yes'/>
                     </Component>
 
+                    <Component Id='cmp_help' Guid='*'>
+                        <File Id='f_help' Source='src\help.txt' KeyPath='yes' />
+                    </Component>
+
                     <!-- Папка ресурсов -->
                     <Directory Id='CoreDir' Name='core'/>
 
@@ -51,6 +55,7 @@
 
         <Feature Id='MainFeature' Title='Application' Level='1' ConfigurableDirectory='APPLICATIONFOLDER'>
             <ComponentRef Id='binary0'/>
+            <ComponentRef Id='cmp_help'/>
             <ComponentGroupRef Id='CoreComponents' />
         </Feature>
 
@@ -72,6 +77,12 @@
             <ComponentRef Id="cmp22" /><ComponentRef Id="cmp23" /><ComponentRef Id="cmp24" />
             <ComponentRef Id="cmp25" /><ComponentRef Id="cmp26" /><ComponentRef Id="cmp27" />
             <ComponentRef Id="cmp28" /><ComponentRef Id="cmp29" /><ComponentRef Id="cmp30" />
+            <!-- Новые ссылки -->
+            <ComponentRef Id="cmp31" /><ComponentRef Id="cmp32" /><ComponentRef Id="cmp33" />
+            <ComponentRef Id="cmp34" /><ComponentRef Id="cmp35" /><ComponentRef Id="cmp36" />
+            <ComponentRef Id="cmp37" /><ComponentRef Id="cmp38" /><ComponentRef Id="cmp39" />
+            <ComponentRef Id="cmp40" /><ComponentRef Id="cmp41" /><ComponentRef Id="cmp42" />
+            <ComponentRef Id="cmp43" /><ComponentRef Id="cmp44" /><ComponentRef Id="cmp45" />
         </ComponentGroup>
 
         <DirectoryRef Id="CoreDir">
@@ -97,6 +108,10 @@
             <Component Id="cmp20" Guid="*"><File Id="f20" Source="src\core\general (SIMPLE FAKE).bat" KeyPath="yes" /></Component>
             <Component Id="cmp21" Guid="*"><File Id="f21" Source="src\core\general.bat" KeyPath="yes" /></Component>
             <Component Id="cmp22" Guid="*"><File Id="f22" Source="src\core\service.bat" KeyPath="yes" /></Component>
+            
+            <!-- Файлы в корне core -->
+            <Component Id="cmp31" Guid="*"><File Id="f31" Source="src\core\lists\ipset-all.txt" KeyPath="yes" /></Component>
+            <Component Id="cmp32" Guid="*"><File Id="f32" Source="src\core\lists\ipset-all.txt.backup" KeyPath="yes" /></Component>
 
             <Directory Id="dir_serv" Name=".service">
                 <Component Id="cmp23" Guid="*"><File Id="f23" Source="src\core\.service\hosts" KeyPath="yes" /></Component>
@@ -110,7 +125,30 @@
                 <Component Id="cmp28" Guid="*"><File Id="f28" Source="src\core\bin\stun.bin" KeyPath="yes" /></Component>
                 <Component Id="cmp29" Guid="*"><File Id="f29" Source="src\core\bin\tls_clienthello_4pda_to.bin" KeyPath="yes" /></Component>
                 <Component Id="cmp30" Guid="*"><File Id="f30" Source="src\core\bin\tls_clienthello_max_ru.bin" KeyPath="yes" /></Component>
+                <!-- Новые файлы в bin -->
+                <Component Id="cmp33" Guid="*"><File Id="f33" Source="src\core\bin\tls_clienthello_www_google_com.bin" KeyPath="yes" /></Component>
+                <Component Id="cmp34" Guid="*"><File Id="f34" Source="src\core\bin\WinDivert.dll" KeyPath="yes" /></Component>
+                <Component Id="cmp35" Guid="*"><File Id="f35" Source="src\core\bin\WinDivert64.sys" KeyPath="yes" /></Component>
             </Directory>
+
+            <!-- Новая папка lists -->
+            <Directory Id="dir_lists" Name="lists">
+                <Component Id="cmp36" Guid="*"><File Id="f36" Source="src\core\lists\ipset-exclude-user.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp37" Guid="*"><File Id="f37" Source="src\core\lists\ipset-exclude.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp38" Guid="*"><File Id="f38" Source="src\core\lists\list-exclude-user.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp39" Guid="*"><File Id="f39" Source="src\core\lists\list-exclude.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp40" Guid="*"><File Id="f40" Source="src\core\lists\list-general-user.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp41" Guid="*"><File Id="f41" Source="src\core\lists\list-general.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp42" Guid="*"><File Id="f42" Source="src\core\lists\list-google.txt" KeyPath="yes" /></Component>
+            </Directory>
+
+            <!-- Новая папка utils -->
+            <Directory Id="dir_utils" Name="utils">
+                <Component Id="cmp43" Guid="*"><File Id="f43" Source="src\core\utils\check_updates.enabled" KeyPath="yes" /></Component>
+                <Component Id="cmp44" Guid="*"><File Id="f44" Source="src\core\utils\targets.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp45" Guid="*"><File Id="f46" Name="test zapret.ps1" Source="src\core\utils\test zapret.ps1" KeyPath="yes" /></Component>
+            </Directory>
+
         </DirectoryRef>
     </Fragment>
 </Wix>
