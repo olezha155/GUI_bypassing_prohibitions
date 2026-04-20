@@ -9,7 +9,7 @@
 
     <Product
         Id='*'
-        Name='GUI_bypassing_prohibitions'
+        Name='NetTunnel'
         UpgradeCode='F9F09155-99CF-4009-8EF9-165CFFB37D9C'
         Manufacturer='Олег'
         Language='1033'
