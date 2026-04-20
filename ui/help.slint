@@ -1,0 +1,29 @@
+import { ScrollView, TextEdit } from "std-widgets.slint";
+import { Theme } from "theme.slint";
+
+export component Help inherits Window {
+    // 1. При инициализации окна приравниваем глобальную тему к значению этого окна
+    init => {
+        Theme.is-dark = root.dark-mode;
+    }
+    changed dark_mode => {
+        Theme.is-dark = root.dark-mode;
+    }
+    background: Theme.background;
+    title: "Справка";
+    width: 600px;
+    height: 700px;
+    in property <string> help_content;
+    in-out property <bool> dark_mode;
+    ScrollView {
+        TextEdit {
+            text: root.help_content;
+            read-only: true;
+            wrap: word-wrap;
+            height: 100%;
+            width: 100%;
+            font-family: "Fira Code";
+            font-size: 16px;
+        }
+    }
+}

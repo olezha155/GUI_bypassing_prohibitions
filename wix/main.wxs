@@ -1,0 +1,155 @@
+<?xml version='1.0' encoding='windows-1252'?>
+<?if $(sys.BUILDARCH) = x64 or $(sys.BUILDARCH) = arm64 ?>
+    <?define PlatformProgramFilesFolder = "ProgramFiles64Folder" ?>
+<?else ?>
+    <?define PlatformProgramFilesFolder = "ProgramFilesFolder" ?>
+<?endif ?>
+
+<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+
+    <Product
+        Id='*'
+        Name='GUI_bypassing_prohibitions'
+        UpgradeCode='F9F09155-99CF-4009-8EF9-165CFFB37D9C'
+        Manufacturer='Олег'
+        Language='1033'
+        Codepage='1252'
+        Version='$(var.Version)'>
+
+        <Package Id='*'
+            Keywords='Installer'
+            Description='Программа для обхода не желательных блокировок'
+            Manufacturer='Олег'
+            InstallerVersion='450'
+            Languages='1033'
+            Compressed='yes'
+            InstallScope='perMachine'
+            SummaryCodepage='1252'
+            />
+
+        <MajorUpgrade
+            Schedule='afterInstallInitialize'
+            DowngradeErrorMessage='A newer version of [ProductName] is already installed.'/>
+
+        <Media Id='1' Cabinet='media1.cab' EmbedCab='yes' DiskPrompt='CD-ROM #1' />
+        <Property Id='DiskPrompt' Value='NetTunnel Installation' />
+
+        <Directory Id='TARGETDIR' Name='SourceDir'>
+            <Directory Id='$(var.PlatformProgramFilesFolder)' Name='PFiles'>
+                <Directory Id='APPLICATIONFOLDER' Name='NetTunnel'>
+                    
+                    <Component Id='binary0' Guid='*'>
+                        <File Id='exe0' Name='NetTunnel.exe' Source='$(var.CargoTargetBinDir)\NetTunnel.exe' KeyPath='yes'/>
+                    </Component>
+
+                    <Component Id='cmp_help' Guid='*'>
+                        <File Id='f_help' Source='src\help.txt' KeyPath='yes' />
+                    </Component>
+
+                    <Directory Id='CoreDir' Name='core'/>
+
+                </Directory>
+            </Directory>
+        </Directory>
+
+        <Feature Id='MainFeature' Title='Application' Level='1' ConfigurableDirectory='APPLICATIONFOLDER'>
+            <ComponentRef Id='binary0'/>
+            <ComponentRef Id='cmp_help'/>
+            <ComponentGroupRef Id='CoreComponents' />
+        </Feature>
+
+        <SetProperty Id='ARPINSTALLLOCATION' Value='[APPLICATIONFOLDER]' After='CostFinalize'/>
+        <Property Id='ARPHELPLINK' Value='https://github.com'></Property>
+        
+        <UI><UIRef Id='WixUI_FeatureTree'/></UI>
+    </Product>
+
+    <Fragment>
+        <ComponentGroup Id='CoreComponents'>
+            <ComponentRef Id="cmp1" /><ComponentRef Id="cmp2" /><ComponentRef Id="cmp3" />
+            <ComponentRef Id="cmp4" /><ComponentRef Id="cmp5" /><ComponentRef Id="cmp6" />
+            <ComponentRef Id="cmp7" /><ComponentRef Id="cmp8" /><ComponentRef Id="cmp9" />
+            <ComponentRef Id="cmp10" /><ComponentRef Id="cmp11" /><ComponentRef Id="cmp12" />
+            <ComponentRef Id="cmp13" /><ComponentRef Id="cmp14" /><ComponentRef Id="cmp15" />
+            <ComponentRef Id="cmp16" /><ComponentRef Id="cmp17" /><ComponentRef Id="cmp18" />
+            <ComponentRef Id="cmp19" /><ComponentRef Id="cmp20" /><ComponentRef Id="cmp21" />
+            <ComponentRef Id="cmp22" /><ComponentRef Id="cmp23" /><ComponentRef Id="cmp24" />
+            <ComponentRef Id="cmp25" /><ComponentRef Id="cmp26" /><ComponentRef Id="cmp27" />
+            <ComponentRef Id="cmp28" /><ComponentRef Id="cmp29" /><ComponentRef Id="cmp30" />
+            <ComponentRef Id="cmp31" /><ComponentRef Id="cmp32" /><ComponentRef Id="cmp33" />
+            <ComponentRef Id="cmp34" /><ComponentRef Id="cmp35" /><ComponentRef Id="cmp36" />
+            <ComponentRef Id="cmp37" /><ComponentRef Id="cmp38" /><ComponentRef Id="cmp39" />
+            <ComponentRef Id="cmp40" /><ComponentRef Id="cmp41" /><ComponentRef Id="cmp42" />
+            <ComponentRef Id="cmp43" /><ComponentRef Id="cmp44" /><ComponentRef Id="cmp45" />
+            <ComponentRef Id="cmp46" />
+        </ComponentGroup>
+
+        <!-- bat файлы в корне core -->
+        <DirectoryRef Id="CoreDir">
+            <Component Id="cmp1" Guid="*"><File Id="f1" Source="src\core\.gitattributes" KeyPath="yes" /></Component>
+            <Component Id="cmp2" Guid="*"><File Id="f2" Source="src\core\.gitignore" KeyPath="yes" /></Component>
+            <Component Id="cmp3" Guid="*"><File Id="f3" Source="src\core\general (ALT).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp4" Guid="*"><File Id="f4" Source="src\core\general (ALT10).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp5" Guid="*"><File Id="f5" Source="src\core\general (ALT11).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp6" Guid="*"><File Id="f6" Source="src\core\general (ALT2).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp7" Guid="*"><File Id="f7" Source="src\core\general (ALT3).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp8" Guid="*"><File Id="f8" Source="src\core\general (ALT4).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp9" Guid="*"><File Id="f9" Source="src\core\general (ALT5).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp10" Guid="*"><File Id="f10" Source="src\core\general (ALT6).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp11" Guid="*"><File Id="f11" Source="src\core\general (ALT7).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp12" Guid="*"><File Id="f12" Source="src\core\general (ALT8).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp13" Guid="*"><File Id="f13" Source="src\core\general (ALT9).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp14" Guid="*"><File Id="f14" Source="src\core\general (FAKE TLS AUTO ALT).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp15" Guid="*"><File Id="f15" Source="src\core\general (FAKE TLS AUTO ALT2).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp16" Guid="*"><File Id="f16" Source="src\core\general (FAKE TLS AUTO ALT3).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp17" Guid="*"><File Id="f17" Source="src\core\general (FAKE TLS AUTO).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp18" Guid="*"><File Id="f18" Source="src\core\general (SIMPLE FAKE ALT).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp19" Guid="*"><File Id="f19" Source="src\core\general (SIMPLE FAKE ALT2).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp20" Guid="*"><File Id="f20" Source="src\core\general (SIMPLE FAKE).bat" KeyPath="yes" /></Component>
+            <Component Id="cmp21" Guid="*"><File Id="f21" Source="src\core\general.bat" KeyPath="yes" /></Component>
+            <Component Id="cmp22" Guid="*"><File Id="f22" Source="src\core\service.bat" KeyPath="yes" /></Component>
+            
+            <!-- файлы в корне core -->
+            <Component Id="cmp31" Guid="*"><File Id="f31" Source="src\core\lists\ipset-all.txt" KeyPath="yes" /></Component>
+            <Component Id="cmp32" Guid="*"><File Id="f32" Source="src\core\lists\ipset-all.txt.backup" KeyPath="yes" /></Component>
+
+            <Directory Id="dir_serv" Name=".service">
+                <Component Id="cmp23" Guid="*"><File Id="f23" Source="src\core\.service\hosts" KeyPath="yes" /></Component>
+                <Component Id="cmp24" Guid="*"><File Id="f24" Source="src\core\.service\ipset-service.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp25" Guid="*"><File Id="f25" Source="src\core\.service\version.txt" KeyPath="yes" /></Component>
+            </Directory>
+            
+            <!-- папка bin -->
+            <Directory Id="dir_c_bin" Name="bin">
+                <Component Id="cmp26" Guid="*"><File Id="f26" Source="src\core\bin\cygwin1.dll" KeyPath="yes" /></Component>
+                <Component Id="cmp27" Guid="*"><File Id="f27" Source="src\core\bin\quic_initial_www_google_com.bin" KeyPath="yes" /></Component>
+                <Component Id="cmp28" Guid="*"><File Id="f28" Source="src\core\bin\stun.bin" KeyPath="yes" /></Component>
+                <Component Id="cmp29" Guid="*"><File Id="f29" Source="src\core\bin\tls_clienthello_4pda_to.bin" KeyPath="yes" /></Component>
+                <Component Id="cmp30" Guid="*"><File Id="f30" Source="src\core\bin\tls_clienthello_max_ru.bin" KeyPath="yes" /></Component>
+                <Component Id="cmp33" Guid="*"><File Id="f33" Source="src\core\bin\tls_clienthello_www_google_com.bin" KeyPath="yes" /></Component>
+                <Component Id="cmp34" Guid="*"><File Id="f34" Source="src\core\bin\WinDivert.dll" KeyPath="yes" /></Component>
+                <Component Id="cmp35" Guid="*"><File Id="f35" Source="src\core\bin\WinDivert64.sys" KeyPath="yes" /></Component>
+                <Component Id="cmp36" Guid="*"><File Id="f36" Source="src\core\bin\winws.exe" KeyPath="yes" /></Component>
+            </Directory>
+
+            <!-- папка lists -->
+            <Directory Id="dir_lists" Name="lists">
+                <Component Id="cmp37" Guid="*"><File Id="f37" Source="src\core\lists\ipset-exclude-user.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp38" Guid="*"><File Id="f38" Source="src\core\lists\ipset-exclude.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp39" Guid="*"><File Id="f39" Source="src\core\lists\list-exclude-user.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp40" Guid="*"><File Id="f40" Source="src\core\lists\list-exclude.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp41" Guid="*"><File Id="f41" Source="src\core\lists\list-general-user.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp42" Guid="*"><File Id="f42" Source="src\core\lists\list-general.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp43" Guid="*"><File Id="f43" Source="src\core\lists\list-google.txt" KeyPath="yes" /></Component>
+            </Directory>
+
+            <!-- папка utils -->
+            <Directory Id="dir_utils" Name="utils">
+                <Component Id="cmp44" Guid="*"><File Id="f44" Source="src\core\utils\check_updates.enabled" KeyPath="yes" /></Component>
+                <Component Id="cmp45" Guid="*"><File Id="f45" Source="src\core\utils\targets.txt" KeyPath="yes" /></Component>
+                <Component Id="cmp46" Guid="*"><File Id="f46" Name="test zapret.ps1" Source="src\core\utils\test zapret.ps1" KeyPath="yes" /></Component>
+            </Directory>
+
+        </DirectoryRef>
+    </Fragment>
+</Wix>
