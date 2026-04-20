@@ -1,54 +1,38 @@
-# 🚀 Bypassing Prohibitions
+# Slint Rust Template
 
-**Умный менеджер автоматизации обхода ограничений.**  
-Графическая оболочка (GUI), которая превращает ручной перебор конфигов в процесс «в один клик». Базируется на технологиях [zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube).
+A template for a Rust application that's using [Slint](https://slint.rs/) for the user interface.
 
-UI/UX интерфейс построен на [Slint](https://slint.dev/). Backend написан на rust с ним можно познакомится на [RustBook](https://doc.rust-lang.ru/book/). Техналогия winws и батники взяты с репозитория от [Flowseal](https://github.com/Flowseal/zapret-discord-youtube)
+## About
 
-Установщик находится во вкладке **[Releases](https://github.com/olezha155/GUI_bypassing_prohibitions/releases)**
+This template helps you get started developing a Rust application with Slint as toolkit
+for the user interface. It demonstrates the integration between the `.slint` UI markup and
+Rust code, how to react to callbacks, get and set properties, and use basic widgets.
 
----
+## Usage
 
-## 🎯 Проблема и решение
-Стандартные методы обхода требуют от пользователя вручную запускать разные сценарии (`.bat` файлы), чтобы найти рабочий. **Bypassing Prohibitions** автоматизирует это: программа сама перебирает конфиги, проверяя доступность конкретного сайта в реальном времени.
+1. Install Rust by following its [getting-started guide](https://www.rust-lang.org/learn/get-started).
+   Once this is done, you should have the `rustc` compiler and the `cargo` build system installed in your `PATH`.
+2. Download and extract the [ZIP archive of this repository](https://github.com/slint-ui/slint-rust-template/archive/refs/heads/main.zip).
+3. Rename the extracted directory and change into it:
+    ```
+    mv slint-rust-template-main my-project
+    cd my-project    
+    ```
+4. Build with `cargo`:
+    ```
+    cargo build
+    ```
+5. Run the application binary:
+    ```
+    cargo run
+    ```
 
-## ✨ Ключевые возможности
-- ⚡ **Встроенная база:** Включает в себя проверенные скрипты, ядро `winws.exe` и предустановленные списки доменов от Flowseal.
-- 🤖 **Интеллектуальный поиск (Auto):** Программа поочередно запускает конфиги и пингует целевой сайт. Как только доступ найден — перебор останавливается.
-- 📥 **Умный импорт доменов:**
-    - При нажатии **«Активировать»** домен текущей ссылки автоматически добавляется в список обхода.
-    - Кнопка **«Добавить в конфигурацию»** позволяет массово импортировать список ссылок/доменов.
-- 🛡️ **Защита от дубликатов:** Благодаря алгоритму `Merge Sort` и бинарному поиску, программа автоматически фильтрует повторяющиеся домены, сохраняя файл конфигурации чистым.
-- 🌓 **Modern GUI:** Легкий интерфейс на Slint с поддержкой темной и светлой тем.
+We recommend using an IDE for development, along with our [LSP-based IDE integration for `.slint` files](https://github.com/slint-ui/slint/blob/master/tools/lsp/README.md). You can also load this project directly in [Visual Studio Code](https://code.visualstudio.com) and install our [Slint extension](https://marketplace.visualstudio.com/items?itemName=Slint.slint).
 
-## 🛠 Архитектура проекта
-Программа использует ресурсы из папки `core`:
-- **winws.exe** — сетевое ядро.
-- **Сценарии (.bat)** — преднастроенные стратегии обхода (hex, split и др.).
-- **list-general.txt** — динамически дополняемый список доменов.
+## Next Steps
 
-## 📖 Инструкция по использованию
+We hope that this template helps you get started, and that you enjoy exploring making user interfaces with Slint. To learn more
+about the Slint APIs and the `.slint` markup language, check out our [online documentation](https://slint.dev/docs).
 
-1. **Запуск:** Запустите `GUI_bypassing_prohibitions.exe` (программа сама запросит права администратора).
-2. **Активация:**
-    *   Авто подбор подключения: 
-       *   Вставьте ссылку в поле ввода (например, `https://youtube.com`).
-       *   Нажмите **«Активировать»**.
-       *   Программа добавит сайт в список и начнет перебор батников. Дождитесь статуса **«[+] РАБОТАЕТ!»**.
-    *   Ручной подбо:
-       *   Выберите `.bat файл` из выподающего списка.
-       *   Нажмите **«Активировать»**.
-       *   После появится статус **Подключено к `выбранный .bat файл`**.
-       *   После чего будут доступны все доммены из конфигурации.
-4. **Массовое добавление:**
-    *   Если нужно добавить сразу пачку сайтов, вставьте их списком в текстовое поле.
-    *   Нажмите **«Добавить в конфигурацию»**.
-
-## ⚙️ Настройки
-- **Время подключения:** Установите таймаут (минимум 1 сек выставлять значения только целыми секундами) на проверку одного конфига. Если интернет медленный, увеличьте до 10-15 сек.
-- **Редактор конфига:** Просматривайте и редактируйте список доменов вручную прямо в приложении.
-
----
-
-### 🙏 Благодарности
-Этот проект является надстройкой над инструментами, разработанными [Flowseal](https://github.com/Flowseal/zapret-discord-youtube). Огромное спасибо автору за эффективные методы обхода.
+Don't forget to edit this readme to replace it by yours, and edit the `name =` field in `Cargo.toml` to match the name of your
+project.

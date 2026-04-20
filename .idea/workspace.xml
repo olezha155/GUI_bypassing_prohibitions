@@ -11,11 +11,7 @@
     </cargoProject>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22e8821e-3cef-479b-ba57-3b96d84b3b06" name="Changes" comment="починил авто поиск батников, сделал чтобы при ручной активации батников старый не перебивал новую активацию">
-      <change beforePath="$PROJECT_DIR$/src/main.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/manager.rs" beforeDir="false" afterPath="$PROJECT_DIR$/src/manager.rs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ui/app-window.slint" beforeDir="false" afterPath="$PROJECT_DIR$/ui/app-window.slint" afterDir="false" />
-    </list>
+    <list default="true" id="22e8821e-3cef-479b-ba57-3b96d84b3b06" name="Changes" comment="починил авто поиск батников, сделал чтобы при ручной активации батников старый не перебивал новую активацию" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,9 +52,9 @@
     &quot;RunOnceActivity.rust.reset.selective.auto.import&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;install-app&quot;,
     &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/RustProject/GUI_bypassing_prohibitions/target/debug&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/RustProject/slint_project/GUI_bypassing_prohibitions&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -68,6 +64,7 @@
     &quot;org.rust.cargo.project.model.impl.CargoExternalSystemProjectAware.subscribe.first.balloon&quot;: &quot;&quot;,
     &quot;org.rust.disableDetachedFileInspectionD:/RustProject/GUI_bypassing_prohibitions/src/main.rs&quot;: &quot;true&quot;,
     &quot;org.rust.first.attach.projects&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.maddyhome.idea.vim.ui.VimEmulationConfigurable&quot;,
     &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -124,6 +121,8 @@
       <workItem from="1775812017663" duration="9680000" />
       <workItem from="1775822581456" duration="904000" />
       <workItem from="1776154725248" duration="109000" />
+      <workItem from="1776501590166" duration="260000" />
+      <workItem from="1776624188641" duration="172000" />
     </task>
     <task id="LOCAL-00001" summary="request for admin rights when opening a window">
       <option name="closed" value="true" />

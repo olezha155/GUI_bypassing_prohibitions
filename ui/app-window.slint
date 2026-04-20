@@ -1,4 +1,14 @@
-import { Button, VerticalBox, TextEdit, ScrollView, HorizontalBox, ComboBox, ListView, StandardButton, SpinBox } from "std-widgets.slint";
+import {
+    Button,
+    VerticalBox,
+    TextEdit,
+    ScrollView,
+    HorizontalBox,
+    ComboBox,
+    ListView,
+    StandardButton,
+    SpinBox,
+} from "std-widgets.slint";
 
 import { Theme } from "theme.slint";
 export { Theme }
@@ -11,11 +21,9 @@ export { Help }
 
 export component AppWindow inherits Window {
     background: Theme.background;
-
-    title: "Bypassing Prohibitions";
+    title: "NetTunnel";
     height: 400px;
     width: 600px;
-
     in-out property <bool> dark-mode <=> Theme.is-dark; // переменная для управления темой и построения моста к бэку
     
     // массив для combobox
@@ -30,8 +38,7 @@ export component AppWindow inherits Window {
     property <string> url_to_activate; // переменная получающая url
     
     // событие для подключения 
-    callback activate_clicked(string, string); 
-    
+    callback activate_clicked(string, string);
     callback config_add_clicked(string); // событие для добавления в конфиги
     callback exit_from_settings(string); // событие для выхода с получением настроек
     callback save_config(bool); // событие для отправки выбранной темы на бэк
@@ -41,72 +48,71 @@ export component AppWindow inherits Window {
 
     // главное окно
     main_layout := Rectangle {
-
         VerticalLayout {
             padding: 15px;
             spacing: 10px;
-
             HorizontalLayout {
                 alignment: end;
                 spacing: 10px;
-
                 Button {
                     width: 100px;
                     height: 40px;
                     text: "Справка";
-                    clicked => { root.open_help(); }
+                    clicked => {
+                        root.open_help();
+                    }
                 }
-                
                 Button {
                     width: 40px;
                     height: 40px;
                     text: "⚙";
-                    clicked => { root.show_settings = true; }
+                    clicked => {
+                        root.show_settings = true;
+                    }
                 }
-
-                Rectangle { } 
+                Rectangle { }
             }
-
-            TextEdit { 
-                width: parent.width - 40px; 
+            TextEdit {
+                width: parent.width - 40px;
                 height: 60px;
-                x: 20px;  
-                placeholder-text: "Укажите ссылку (https://google.com)..."; 
-                font-size: 14px; 
-                edited(text) => { root.url_to_activate = text; } 
-            } 
-
-            ComboBox { 
                 x: 20px;
-                width: parent.width - 40px; 
-                model: root.combo_options;
-                selected(current-value) => { root.selected_config = current_value;  }
+                placeholder-text: "Укажите ссылку (https://google.com)...";
+                font-size: 14px;
+                edited(text) => {
+                    root.url_to_activate = text;
+                }
             }
-
+            ComboBox {
+                x: 20px;
+                width: parent.width - 40px;
+                model: root.combo_options;
+                selected(current-value) => {
+                    root.selected_config = current_value;
+                }
+            }
             HorizontalBox {
                 width: 100%;
                 alignment: center;
                 spacing: 15px;
-            
                 Button {
-                    height: 40px; width: 120px;
-
+                    height: 40px;
+                    width: 120px;
                     text: "Активировать";
-                    clicked => { root.activate_clicked(root.url_to_activate, root.selected_config); }
-                }  
-
+                    clicked => {
+                        root.activate_clicked(root.url_to_activate, root.selected_config);
+                    }
+                }
                 Button {
                     text: "Добавить в конфигурацию";
-                    clicked => { root.config_add_clicked(root.url_to_activate) }
+                    clicked => {
+                        root.config_add_clicked(root.url_to_activate)
+                    }
                 }
             }
-
             TextEdit {
                 x: 15px;
-                width: parent.width - 40px; 
-
+                width: parent.width - 40px;
                 text: root.status_log;
-
                 font-family: "Consolas";
                 font-size: 14px;
                 read-only: true;
@@ -117,12 +123,10 @@ export component AppWindow inherits Window {
     }
 
     // окно настроек
-    if (root.show_settings) : TouchArea {
-
+    if (root.show_settings): TouchArea {
         Rectangle {
             background: rgba(0, 0, 0, 0.4);
         }
-
         Rectangle {
             width: 80%;
             height: 77%;
@@ -130,57 +134,53 @@ export component AppWindow inherits Window {
             border-radius: 8px;
             border-width: 1px;
             border-color: #444;
-
             VerticalBox {
                 padding: 20px;
                 alignment: start;
-
                 Text {
                     text: "Настройки приложения";
                     font-size: 18px;
                     horizontal-alignment: center;
                 }
-
-                Text {  }
-                Text { 
-                    text: "Укажите время подключения..."; 
+                Text { }
+                Text {
+                    text: "Укажите время подключения...";
                     font-size: 14px;
                 }
-                TextEdit { 
+                TextEdit {
                     height: 50px;
                     text <=> root.time_connect_to_site;
                     font-size: 14px;
                 }
-
-                Text {  }
-                Text { 
+                Text { }
+                Text {
                     text: "Темы:";
-                    font-size: 14px; 
+                    font-size: 14px;
                 }
                 ComboBox {
                     model: ["Темная", "Светлая"];
                     current-value: Theme.is-dark ? "Темная" : "Светлая";
-            
                     selected(val) => {
                         Theme.is-dark = (val == "Темная");
                         root.save_config(Theme.is-dark);
                     }
                 }
-
-                Text { text: "\n"; }
+                Text {
+                    text: "\n";
+                }
                 Rectangle {
-
                     Button {
                         text: "Просмотреть текущую конфигурацю";
                         x: 15px;
-                        clicked => { root.print_config(); }
+                        clicked => {
+                            root.print_config();
+                        }
                     }
-
                     Button {
                         text: "Закрыть и сохранить";
                         x: 270px;
-                        clicked => { 
-                            root.show_settings = false; 
+                        clicked => {
+                            root.show_settings = false;
                             root.exit_from_settings(root.time_connect_to_site);
                         }
                     }

@@ -46,3 +46,8 @@ betterttv.net
 7tv.io
 localizeapi.com
 klipy.com
+google.com
+github.com
+astronvim.com
+anvil.works
+slint.dev

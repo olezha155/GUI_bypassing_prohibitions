@@ -3,7 +3,7 @@
 version = 4
 
 [[package]]
-name = "GUI_bypassing_prohibitions"
+name = "NetTunnel"
 version = "0.1.0"
 dependencies = [
  "confy",

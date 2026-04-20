@@ -1,5 +1,5 @@
 [package]
-name = "GUI_bypassing_prohibitions"
+name = "NetTunnel"
 version = "0.1.0"
 authors = ["Олег olezha155@gmail.com"]
 description = "Программа для обхода не желательных юлокировок"
